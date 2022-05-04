@@ -51,8 +51,10 @@ if (loadedLayout === 'й') {
 localStorage.setItem('layout', loadedLayout);
 
 document.onkeydown = (event) => {
-  event.preventDefault();
   keysPressed[event.code] = true;
+  if (event.code === "Tab" || event.code === "MetaLeft" || event.code === "AltLeft" || event.code === "AltRight") {
+    event.preventDefault();
+  }
   if (keysPressed['AltLeft'] && event.code === 'ShiftLeft' || keysPressed['AltLeft'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftLeft') {
     if (loadedLayout === 'q') {  
       init(keyboardRUlc);
