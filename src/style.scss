@@ -53,7 +53,11 @@ body {
 }
 
 .active {
-  background-color:#4F8A8B;
+  background-color:#4F8A8B !important;
+}
+
+#Backspace, #Tab, #Delete, #CapsLock, #Enter, #ShiftLeft, #ShiftRight, #ControlRight, #ControlLeft, #MetaLeft, #AltLeft, #AltRight, #ArrowLeft, #ArrowRight, #ArrowUp, #ArrowDown {
+  background-color: #FCAA67;
 }
 
 #Backspace {

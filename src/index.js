@@ -26,12 +26,14 @@ const keyboardRUucWithShift = ['Ё', '!', '@', '#', '$', '%', '^', '&', '*', '('
 const codes = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 let keysPressed = {};
 let loadedLayout = '';
+let prevLayout = '';
 
 function init(layout) {
   let out = '';
   for (let i = 0; i < layout.length;i++) {
     out += `<div class='key' id='${codes[i]}'>${layout[i]}</div>`
   }
+  prevLayout = loadedLayout;
   loadedLayout = layout[15];
   console.log(loadedLayout);
   document.querySelector('#keyboard-keys').innerHTML = out;
@@ -40,9 +42,9 @@ function init(layout) {
 init(keyboardENlc);
 
 document.onkeydown = (event) => {
+  event.preventDefault();
   keysPressed[event.code] = true;
   if (keysPressed['AltLeft'] && event.code === 'ShiftLeft' || keysPressed['AltLeft'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftLeft') {
-    console.log(loadedLayout);
     if (loadedLayout === 'q') {  
       init(keyboardRUlc);
     } else if (loadedLayout === 'Q') {
@@ -52,14 +54,29 @@ document.onkeydown = (event) => {
     } else if (loadedLayout === 'й'){
       init(keyboardENlc);
     }
-  }
-  if (event.code === 'CapsLock') {
-    document.querySelector('#CapsLock').classList.toggle('active');
+  } else if (event.code === 'CapsLock') {
+    if (loadedLayout === 'q') {
+      init(keyboardENuc);
+      document.querySelector('#CapsLock').classList.add('active');
+    } else if (loadedLayout === 'Q') {
+      init(keyboardENlc);
+      document.querySelector('#CapsLock').classList.remove('active');
+    } else if (loadedLayout === 'й') {
+      init(keyboardRUuc);
+      document.querySelector('#CapsLock').classList.add('active');
+    } else if (loadedLayout === 'Й') {
+      init(keyboardRUlc);
+      document.querySelector('#CapsLock').classList.remove('active');
+    }
   } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (loadedLayout === 'q') {
       init(keyboardENucWithShift);
+    } else if (loadedLayout === 'Q') {
+      init(keyboardENlcWithShift);
     } else if (loadedLayout === 'й') {
       init(keyboardRUucWithShift)
+    } else if (loadedLayout === 'Й') {
+      init(keyboardRUlcWithShift)
     }
     document.querySelector(`#${event.code}`).classList.add('active');
   } else {
@@ -73,9 +90,17 @@ document.onkeyup = (event) => {
     null;
   } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (loadedLayout === 'Q') {
-      init(keyboardENlc);
+      if (prevLayout === 'q') {
+        init(keyboardENlc);
+      } else {
+        init(keyboardENuc);
+      } 
     } else if (loadedLayout === 'Й') {
-      init(keyboardRUlc);
+      if (prevLayout === 'й') {
+        init(keyboardRUlc);
+      } else {
+        init(keyboardRUuc);
+      }
     }
     document.querySelector(`#${event.code}`).classList.remove('active');
   } else {
