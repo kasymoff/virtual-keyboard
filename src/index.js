@@ -25,7 +25,7 @@ const keyboardRUucWithShift = ['Ё', '!', '@', '#', '$', '%', '^', '&', '*', '('
 
 const codes = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 let keysPressed = {};
-let loadedLayout = '';
+let loadedLayout = localStorage.getItem('layout');
 let prevLayout = '';
 
 function init(layout) {
@@ -35,11 +35,20 @@ function init(layout) {
   }
   prevLayout = loadedLayout;
   loadedLayout = layout[15];
-  console.log(loadedLayout);
   document.querySelector('#keyboard-keys').innerHTML = out;
 }
 
-init(keyboardENlc);
+if (loadedLayout === 'й') {
+  init(keyboardRUlc);
+} else if (loadedLayout === 'Й') {
+  init(keyboardRUuc);
+} else if (loadedLayout === 'Q') {
+  init(keyboardENuc);
+} else {
+  init(keyboardENlc)
+}
+
+localStorage.setItem('layout', loadedLayout);
 
 document.onkeydown = (event) => {
   event.preventDefault();
@@ -47,37 +56,48 @@ document.onkeydown = (event) => {
   if (keysPressed['AltLeft'] && event.code === 'ShiftLeft' || keysPressed['AltLeft'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftLeft') {
     if (loadedLayout === 'q') {  
       init(keyboardRUlc);
+      localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'Q') {
       init(keyboardRUuc);
+      localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'Й') {
       init(keyboardENuc);
+      localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'й'){
       init(keyboardENlc);
+      localStorage.setItem('layout', loadedLayout)
     }
+    console.log(localStorage)
   } else if (event.code === 'CapsLock') {
     if (loadedLayout === 'q') {
       init(keyboardENuc);
+      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.add('active');
     } else if (loadedLayout === 'Q') {
       init(keyboardENlc);
+      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.remove('active');
     } else if (loadedLayout === 'й') {
       init(keyboardRUuc);
+      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.add('active');
     } else if (loadedLayout === 'Й') {
       init(keyboardRUlc);
+      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.remove('active');
     }
+    console.log(localStorage)
   } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (loadedLayout === 'q') {
       init(keyboardENucWithShift);
     } else if (loadedLayout === 'Q') {
       init(keyboardENlcWithShift);
     } else if (loadedLayout === 'й') {
-      init(keyboardRUucWithShift)
+      init(keyboardRUucWithShift);
     } else if (loadedLayout === 'Й') {
-      init(keyboardRUlcWithShift)
+      init(keyboardRUlcWithShift);
     }
+    console.log(localStorage)
     document.querySelector(`#${event.code}`).classList.add('active');
   } else {
     document.querySelector(`#${event.code}`).classList.add('active');
@@ -92,16 +112,21 @@ document.onkeyup = (event) => {
     if (loadedLayout === 'Q') {
       if (prevLayout === 'q') {
         init(keyboardENlc);
+        localStorage.setItem('layout', loadedLayout)
       } else {
         init(keyboardENuc);
+        localStorage.setItem('layout', loadedLayout)
       } 
     } else if (loadedLayout === 'Й') {
       if (prevLayout === 'й') {
         init(keyboardRUlc);
+        localStorage.setItem('layout', loadedLayout)
       } else {
         init(keyboardRUuc);
+        localStorage.setItem('layout', loadedLayout)
       }
     }
+    console.log(localStorage)
     document.querySelector(`#${event.code}`).classList.remove('active');
   } else {
     document.querySelector(`#${event.code}`).classList.remove('active');
