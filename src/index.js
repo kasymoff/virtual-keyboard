@@ -15,7 +15,7 @@ document.body.appendChild(component('div', "info"));
 document.querySelector('#info').appendChild(component('div', "infoLeft"));
 document.querySelector('#info').appendChild(component('div', "infoCenter"));
 document.querySelector('#info').appendChild(component('div', "infoRight"));
-document.querySelector('#infoLeft').innerHTML = '<a href="https://github.com/rolling-scopes-school/kasymoff-JSFE2022Q1/tree/VirtualKeyboard" target="_blank">Sourcecode</a>';
+document.querySelector('#infoLeft').innerHTML = '<a href="https://github.com/kasymoff/virtual-keyboard" target="_blank">Sourcecode</a>';
 document.querySelector('#infoCenter').textContent = 'To change keyboard layout use Alt + Shift';
 document.querySelector('#infoRight').innerHTML = '<a href="https://github.com/kasymoff" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHUB"></a>';
 
