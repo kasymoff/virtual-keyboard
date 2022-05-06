@@ -29,11 +29,12 @@ textarea:focus {
 }
 
 #text-area {
+  resize: vertical;
   margin-top: 10px;
   display: block;
   border: none;
   padding: 5px;
-  width: 100%;
+  width: 1270px;
   height: 45vh;
   border-radius: 5px;
   background-color: rgb(210, 210, 210, 0.6);
@@ -51,6 +52,42 @@ textarea:focus {
   align-items: center;
   flex-wrap: wrap;
   background-color: rgb(210, 210, 210, 0.6);
+}
+
+#infoLeft {
+  a {
+    text-decoration: none;
+    color: $body-color;
+    transition: all 1s;
+    &:hover {
+      color:#4F8A8B
+    }
+  }
+}
+
+#infoRight {
+  margin: 0 auto;
+  img {
+    width: 20px;
+    transition: all 1s;
+    &:hover {
+      width: 25px;
+    }
+  }
+}
+
+#info {
+  text-align: center;
+  color:#222831;
+  text-shadow: 1px -1px #FCAA67;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 30px;
+  border-radius: 20px;
+  background-color: rgb(210, 210, 210, 0.3);
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
 }
 
 #keyboard-keys {

@@ -11,6 +11,13 @@ document.querySelector('#title').textContent = "Virtual Keyboard";
 document.body.appendChild(component('textarea', "text-area"));
 document.body.appendChild(component('div', "keyboard"));
 document.querySelector("#keyboard").appendChild(component('div', "keyboard-keys"));
+document.body.appendChild(component('div', "info"));
+document.querySelector('#info').appendChild(component('div', "infoLeft"));
+document.querySelector('#info').appendChild(component('div', "infoCenter"));
+document.querySelector('#info').appendChild(component('div', "infoRight"));
+document.querySelector('#infoLeft').innerHTML = '<a href="https://github.com/rolling-scopes-school/kasymoff-JSFE2022Q1/tree/VirtualKeyboard" target="_blank">Sourcecode</a>';
+document.querySelector('#infoCenter').textContent = 'To change keyboard layout use Alt + Shift';
+document.querySelector('#infoRight').innerHTML = '<a href="https://github.com/kasymoff" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHUB"></a>';
 
 const keyboardENlc = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', "Delete", 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '⮝', 'Shift', 'Ctrl', '⊞', 'Alt', ' ', 'Alt', '⮜', '⮟', '⮞', 'Ctrl'];
 const keyboardENuc = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', "Delete", 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', '⮝', 'Shift', 'Ctrl', '⊞', 'Alt', ' ', 'Alt', '⮜', '⮟', '⮞', 'Ctrl'];
