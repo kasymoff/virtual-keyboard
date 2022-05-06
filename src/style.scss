@@ -71,10 +71,10 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   background-color: #FBD46D;
-  transition: all 1s;
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
-    background-color: #7B886B !important;
+    background-color: #7B886B;
   }
 }
 
@@ -84,6 +84,10 @@ textarea:focus {
 
 #Backspace, #Tab, #Delete, #CapsLock, #Enter, #ShiftLeft, #ShiftRight, #ControlRight, #ControlLeft, #MetaLeft, #AltLeft, #AltRight, #ArrowLeft, #ArrowRight, #ArrowUp, #ArrowDown {
   background-color: #FCAA67;
+  &:hover {
+    cursor: pointer;
+    background-color: #7B886B;
+  }
 }
 
 #Backspace {
