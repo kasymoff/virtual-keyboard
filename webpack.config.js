@@ -14,7 +14,9 @@ module.exports = {
   },
   plugins: 
     [new HtmlWebpackPlugin({
-      title: 'development'
+      title: 'Virtual Keyboard',
+      favicon: './src/assets/favicon.ico',
+      hash: true
     })],
   module: {
     rules: [

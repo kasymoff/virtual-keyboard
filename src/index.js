@@ -28,13 +28,24 @@ let prevLayout = '';
 let inputStart;
 
 function init(layout) {
-  let out = '';
-  for (let i = 0; i < layout.length;i++) {
-    out += `<div class='key' id='${codes[i]}'>${layout[i]}</div>`
+  if (document.querySelector('#keyboard-keys').innerHTML === '') {
+    let out = '';
+    for (let i = 0; i < layout.length; i++) {
+      out += `<div class='key' id='${codes[i]}'>${layout[i]}</div>`
+    }
+    prevLayout = loadedLayout;
+    loadedLayout = layout[15];
+    document.querySelector('#keyboard-keys').innerHTML = out;
+  } else {
+    const loadedKeys = document.querySelectorAll('.key');
+    for (let i = 0; i < layout.length; i++) {
+      if (loadedKeys[i].textContent !== layout[i]) {
+        loadedKeys[i].textContent = layout[i];
+      }
+    }
+    prevLayout = loadedLayout;
+    loadedLayout = layout[15];
   }
-  prevLayout = loadedLayout;
-  loadedLayout = layout[15];
-  document.querySelector('#keyboard-keys').innerHTML = out;
 }
 
 if (loadedLayout === 'й') {
@@ -49,34 +60,29 @@ if (loadedLayout === 'й') {
 
 localStorage.setItem('layout', loadedLayout);
 
-document.querySelector('#text-area').oninput = (event) => {
-  
-}
-
 document.onkeydown = (event) => {
   inputStart = document.querySelector('#text-area').selectionStart;
   keysPressed[event.code] = true;
   if (event.code === "Tab" || event.code === "MetaLeft" || event.code === "AltLeft" || event.code === "AltRight" || event.code === "ShiftLeft" || event.code === "ShiftRight") {
     event.preventDefault();
   }
-  if (keysPressed['AltLeft'] && event.code === 'ShiftLeft' || keysPressed['AltLeft'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftLeft') {
+  if (keysPressed['AltLeft'] && event.code === 'ShiftLeft' || keysPressed['AltLeft'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftRight' || keysPressed['AltRight'] && event.code === 'ShiftLeft'
+  || keysPressed['ShiftLeft'] && event.code === 'AltLeft' || keysPressed['ShiftLeft'] && event.code === 'AltRight' || keysPressed['ShiftRight'] && event.code === 'AltRight' || keysPressed['ShiftRight'] && event.code === 'AltLeft') {
     if (loadedLayout === 'q') {  
       init(keyboardRUlc);
       localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'Q') {
       init(keyboardRUuc);
-      localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'Й') {
       init(keyboardENuc);
-      localStorage.setItem('layout', loadedLayout)
     } else if (loadedLayout === 'й'){
       init(keyboardENlc);
       localStorage.setItem('layout', loadedLayout)
     }
+    document.querySelector(`#${event.code}`).classList.add('active');
   } else if (event.code === 'CapsLock') {
     if (loadedLayout === 'q') {
       init(keyboardENuc);
-      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.add('active');
     } else if (loadedLayout === 'Q') {
       init(keyboardENlc);
@@ -84,7 +90,6 @@ document.onkeydown = (event) => {
       document.querySelector('#CapsLock').classList.remove('active');
     } else if (loadedLayout === 'й') {
       init(keyboardRUuc);
-      localStorage.setItem('layout', loadedLayout)
       document.querySelector('#CapsLock').classList.add('active');
     } else if (loadedLayout === 'Й') {
       init(keyboardRUlc);
@@ -160,7 +165,6 @@ document.onkeyup = (event) => {
         localStorage.setItem('layout', loadedLayout)
       } else {
         init(keyboardENuc);
-        localStorage.setItem('layout', loadedLayout)
       } 
     } else if (loadedLayout === 'Й') {
       if (prevLayout === 'й') {
@@ -168,6 +172,19 @@ document.onkeyup = (event) => {
         localStorage.setItem('layout', loadedLayout)
       } else {
         init(keyboardRUuc);
+      }
+    } else if (loadedLayout === 'q') {
+      if (prevLayout === 'Q') {
+        init(keyboardENuc);
+      } else {
+        init(keyboardENlc);
+        localStorage.setItem('layout', loadedLayout)
+      } 
+    } else if (loadedLayout === 'й') {
+      if (prevLayout === 'Й') {
+        init(keyboardRUuc);
+      } else {
+        init(keyboardRUlc);
         localStorage.setItem('layout', loadedLayout)
       }
     }
@@ -236,7 +253,6 @@ document.querySelector('#keyboard-keys').onmousedown = (event) => {
       document.querySelector(`#${event.target.id}`).classList.toggle('active');
       if (loadedLayout === 'q') {
         init(keyboardENuc);
-        localStorage.setItem('layout', loadedLayout)
         document.querySelector('#CapsLock').classList.add('active');
       } else if (loadedLayout === 'Q') {
         init(keyboardENlc);
@@ -244,7 +260,6 @@ document.querySelector('#keyboard-keys').onmousedown = (event) => {
         document.querySelector('#CapsLock').classList.remove('active');
       } else if (loadedLayout === 'й') {
         init(keyboardRUuc);
-        localStorage.setItem('layout', loadedLayout)
         document.querySelector('#CapsLock').classList.add('active');
       } else if (loadedLayout === 'Й') {
         init(keyboardRUlc);
@@ -256,47 +271,45 @@ document.querySelector('#keyboard-keys').onmousedown = (event) => {
 }
 
 document.querySelector('#keyboard-keys').onmouseup = (event) => {
-  document.querySelector(`#${event.target.id}`).classList.remove('active');
-  if (event.target.id === 'ShiftLeft' || event.target.id === 'ShiftRight') {
-    if (loadedLayout === 'Q') {
-      if (prevLayout === 'q') {
-        init(keyboardENlc);
-        localStorage.setItem('layout', loadedLayout)
-      } else {
-        init(keyboardENuc);
-        localStorage.setItem('layout', loadedLayout)
-      } 
-    } else if (loadedLayout === 'Й') {
-      if (prevLayout === 'й') {
-        init(keyboardRUlc);
-        localStorage.setItem('layout', loadedLayout)
-      } else {
-        init(keyboardRUuc);
-        localStorage.setItem('layout', loadedLayout)
+  if (event.target.id !== 'CapsLock') {
+    document.querySelector(`#${event.target.id}`).classList.remove('active');
+    if (event.target.id === 'ShiftLeft' || event.target.id === 'ShiftRight') {
+      if (loadedLayout === 'Q') {
+        if (prevLayout === 'q') {
+          init(keyboardENlc);
+          localStorage.setItem('layout', loadedLayout)
+        } else {
+          init(keyboardENuc);
+        } 
+      } else if (loadedLayout === 'Й') {
+        if (prevLayout === 'й') {
+          init(keyboardRUlc);
+          localStorage.setItem('layout', loadedLayout)
+        } else {
+          init(keyboardRUuc);
+        }
+      } else if (loadedLayout === 'q') {
+        if (prevLayout === 'Q') {
+          init(keyboardENuc);
+        } else {
+          init(keyboardENlc);
+          localStorage.setItem('layout', loadedLayout)
+        } 
+      } else if (loadedLayout === 'й') {
+        if (prevLayout === 'Й') {
+          init(keyboardRUuc);
+        } else {
+          init(keyboardRUlc);
+          localStorage.setItem('layout', loadedLayout)
+        }
       }
+      document.querySelector(`#${event.code}`).classList.remove('active');
     }
   }
 }
 
 document.querySelector('#keyboard-keys').onmouseout = (event) => {
-  document.querySelector(`#${event.target.id}`).classList.remove('active');
-  if (event.target.id === 'ShiftLeft' || event.target.id === 'ShiftRight') {
-    if (loadedLayout === 'Q') {
-      if (prevLayout === 'q') {
-        init(keyboardENlc);
-        localStorage.setItem('layout', loadedLayout)
-      } else {
-        init(keyboardENuc);
-        localStorage.setItem('layout', loadedLayout)
-      } 
-    } else if (loadedLayout === 'Й') {
-      if (prevLayout === 'й') {
-        init(keyboardRUlc);
-        localStorage.setItem('layout', loadedLayout)
-      } else {
-        init(keyboardRUuc);
-        localStorage.setItem('layout', loadedLayout)
-      }
-    }
+  if (event.target.id !== 'CapsLock') {
+    document.querySelector(`#${event.target.id}`).classList.remove('active');
   }
 }
