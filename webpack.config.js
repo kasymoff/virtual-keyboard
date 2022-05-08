@@ -16,7 +16,8 @@ module.exports = {
     [new HtmlWebpackPlugin({
       title: 'Virtual Keyboard',
       favicon: './src/assets/favicon.ico',
-      hash: true
+      hash: true,
+      minify: true
     })],
   module: {
     rules: [
@@ -30,7 +31,7 @@ module.exports = {
       }
     ]
   },
-  // optimization: {
-  //   runtimeChunk: 'single',
-  // },
+  optimization: {
+    minimize: true,
+  }
 };
