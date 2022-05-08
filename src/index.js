@@ -7,7 +7,7 @@ function component(component, id, options) {
 }
 
 document.body.appendChild(component('h1', 'title'));
-document.querySelector('#title').textContent = "Virtual Keyboard";
+document.querySelector('#title').textContent = "Virtual Keyboard | Windows";
 document.body.appendChild(component('textarea', "text-area"));
 document.body.appendChild(component('div', "keyboard"));
 document.querySelector("#keyboard").appendChild(component('div', "keyboard-keys"));
